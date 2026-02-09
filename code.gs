@@ -29,6 +29,21 @@ function morningPodcastWorkflow() {
   folder.addFile(docFile);
   DriveApp.getRootFolder().removeFile(docFile);
   
+            // --- EMAIL NOTIFICATION LOGIC ---
+  const recipient = Session.getActiveUser().getEmail();
+  const subject = `Your Morning Briefing is Ready - ${dateStr}`;
+  const body = `Good morning! 
+
+Your morning briefing has been generated successfully.
+
+- Read the Summary: ${doc.getUrl()}
+- View Folder (Briefings): ${folder.getUrl()}
+
+Have a great day!`;
+
+  MailApp.sendEmail(recipient, subject, body);
+  // --- END EMAIL LOGIC ---
+  
   console.log("Success! Your Google Doc summary (Gemini 2.5 Flash Lite) is in your Drive folder.");
 }
 
